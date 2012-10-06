@@ -1,46 +1,43 @@
 function GameCenter() {
 	if(localStorage.getItem('GameCenterLoggedin')) {
-		PhoneGap.exec("GameCenterPlugin.authenticateLocalPlayer");
+		//cordova.exec("GameCenterPlugin.authenticateLocalPlayer");
 	}
 }
 
 GameCenter.prototype.authenticate = function() {
-    PhoneGap.exec("GameCenterPlugin.authenticateLocalPlayer");
+    cordova.exec("GameCenterPlugin.authenticateLocalPlayer");
+    console.log('authenticated');
 };
 
 GameCenter.prototype.showLeaderboard = function(category) {
-    PhoneGap.exec("GameCenterPlugin.showLeaderboard",category);	
+    cordova.exec("GameCenterPlugin.showLeaderboard",category);	
 };
 
 GameCenter.prototype.reportScore = function(category,score) {
-    PhoneGap.exec("GameCenterPlugin.reportScore",category,score);		
+    cordova.exec("GameCenterPlugin.reportScore",category,score);		
 };
 
 GameCenter.prototype.showAchievements = function() {
-    PhoneGap.exec("GameCenterPlugin.showAchievements");			
+    cordova.exec("GameCenterPlugin.showAchievements");			
 };
 
 GameCenter.prototype.getAchievement = function(category) {
-	PhoneGap.exec("GameCenterPlugin.reportAchievementIdentifier",category,100);
+	cordova.exec("GameCenterPlugin.reportAchievementIdentifier",category,100);
 };
 
 GameCenter._userDidLogin = function() {
 	localStorage.setItem('GameCenterLoggedin', 'true');
+    console.log('authenticated');
 };
 
 GameCenter._userDidSubmitScore = function() {
-	alert('score submitted');
+    console.log('score submitted');
 };
 
 GameCenter._userDidFailSubmitScore = function() {
-	alert('score error');
+    console.log('score submitted');
 };
 
-PhoneGap.addConstructor(function() 
-{
-  if(!window.plugins)
-  {
-    window.plugins = {};
-  }
-    window.plugins.gamecenter = new GameCenter();
-});
+//For Cordova 2+
+if(!window.plugins) window.plugins = {};
+window.plugins.gamecenter = new GameCenter();
